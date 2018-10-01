@@ -1,0 +1,7 @@
+profiles::security::selinux: true
+profiles::security::selinux::mode: permissive
+
+profiles::website::nginx::vhosts:
+  'kibana':
+    listen_port: 80
+    proxy: 'http://kibana-0:5601'
