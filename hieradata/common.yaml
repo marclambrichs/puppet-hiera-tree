@@ -1,0 +1,14 @@
+---
+profiles::bootstrap::firewall: true
+profiles::bootstrap::firewall::ensure: stopped
+profiles::bootstrap::firewall::entries:
+  '003 allow ssh':
+     action: 'accept'
+     chain: 'INPUT'
+     port: 22
+profiles::bootstrap::puppet: true
+profiles::bootstrap::puppet::autosign_domains:
+  - '*.xdmlzac1w4selh1kaufwwvi0wb.cwx.internal.cloudapp.net'
+profiles::bootstrap::puppet::hiera_yaml_datadir: "/etc/puppetlabs/code/environments/mgmt/hieradata"
+profiles::bootstrap::puppet::puppetmaster: puppet
+profiles::bootstrap::puppet::server_foreman_url: https://puppet

@@ -1,0 +1,55 @@
+---
+classes:
+  - roles::puppetmaster
+profiles::bootstrap::firewall::entries:
+  '005 allow web':
+     action: 'accept'
+     chain: 'INPUT'
+     port: [80, 443]
+profiles::bootstrap::puppet::autosign: '/etc/puppetlabs/puppet/autosign.conf'
+profiles::bootstrap::puppet::runmode: none
+profiles::bootstrap::puppet::server: true
+profiles::bootstrap::puppet::server_foreman: true
+profiles::bootstrap::puppet::server_puppetdb_host: puppet
+profiles::bootstrap::puppet::server_reports: 'store, foreman'
+profiles::bootstrap::puppet::server_storeconfigs_backend: 'puppetdb'
+profiles::bootstrap::repos: true
+profiles::bootstrap::repositories::epel: true
+profiles::database::postgresql: true
+profiles::database::postgresql::databases:
+  foreman:
+    user: foreman
+    password: foreman
+    grant: all
+  puppetdb:
+    user: puppetdb
+    password: puppetdb
+    grant: all
+profiles::database::postgresql::manage_repo: true
+profiles::database::postgresql::version: '9.6'
+profiles::orchestration::mcollective::middleware_hosts:
+ - puppetmaster-0.xdmlzac1w4selh1kaufwwvi0wb.cwx.internal.cloudapp.net
+profiles::puppet::foreman: true
+profiles::puppet::foreman::plugins:
+  puppetdb:
+    package: 'tfm-rubygem-puppetdb_foreman'
+profiles::puppet::foreman::settings:
+  enc_environment:
+    value: false
+  modulepath:
+    value: '/etc/puppetlabs/code/modules'
+  puppet_server:
+    value: "puppet"
+  puppetdb_address:
+    value: "https://puppet:8081/v2/commands"
+  puppetdb_dashboard_address:
+    value: "http://puppet:8080/pdb/dashboard"
+  puppetdb_enabled:
+    value: true    
+profiles::puppet::foreman_proxy: true
+profiles::puppet::foreman_proxy::custom_repo: true
+profiles::puppet::foreman_proxy::foreman_host: puppet
+profiles::puppet::foreman_proxy::puppetca: true
+profiles::puppet::puppetdb: true
+profiles::puppet::puppetmaster: true
+profiles::puppet::r10k::mcollective: true
